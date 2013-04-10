@@ -1,2 +1,3 @@
 Flask
 Flask-Script
+DJango==1.5.1
