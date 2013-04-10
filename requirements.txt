@@ -1,3 +1,2 @@
-Flask
-Flask-Script
-django==1.5.1
+South
+Django==1.5.1
