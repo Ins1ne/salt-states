@@ -3,7 +3,7 @@ include:
 
 venv:
   virtualenv.managed:
-    - name: {{ pillar['venv_path'] }}
+    - name: {{ pillar['virtualenv'] }}
     - no_site_packages: True
     - runas: ubuntu
     - require:
@@ -20,7 +20,7 @@ webapp:
 
 update_requirements:
   cmd.run:
-    - name: ". {{ pillar['venv_path'] }}/bin/activate && pip install -r requirements.txt"
+    - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -r requirements.txt"
     - cwd: {{ pillar['project_root'] }}
     - require:
       - pkg: python-virtualenv
