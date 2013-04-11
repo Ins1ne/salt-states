@@ -1,0 +1,5 @@
+base:
+  '*':
+    - reqs
+    - django
+    - uwsgi
