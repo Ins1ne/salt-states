@@ -25,8 +25,6 @@ venv:
 update_requirements:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && python manage.py collectstatic --noinput"
-    #- name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -r
-      #requirements.txt && python manage.py collectstatic --noinput"
     - cwd: {{ pillar['project_root'] }}
     - require:
       #- pkg: python-virtualenv

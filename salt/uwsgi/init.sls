@@ -19,7 +19,6 @@ uwsgi-service:
         - enable: True
         - name: uwsgi
         - require:
-            - file: /etc/init/uwsgi.conf
             - file: /etc/init/uwsgi.ini
 
 reload-uwsgi-service:
@@ -29,13 +28,6 @@ reload-uwsgi-service:
             - pip: uwsgi
             - git: webapp
             - virtualenv: venv
-
-/etc/init/uwsgi.conf:
-    file.managed:
-        - source: salt://uwsgi/uwsgi.conf
-        - template: jinja
-        - require:
-            - pip: uwsgi
 
 /etc/init/uwsgi.ini:
     file.managed:
@@ -57,5 +49,3 @@ nginx:
         - running
         - watch:
             - file: nginxconf
-        #- require:
-            #- pkg: reload-uwsgi-service
