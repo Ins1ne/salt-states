@@ -43,3 +43,19 @@ reload-uwsgi-service:
         - template: jinja
         - require:
             - pip: uwsgi
+
+nginxconf:
+    file.managed:
+        - name: /etc/nginx/sites-enabled/default
+        - source: salt://uwsgi/nginx.conf
+        - template: jinja
+        - makedirs: True
+        - mode: 755
+
+nginx:
+    service:
+        - running
+        - watch:
+            - file: nginxconf
+        #- require:
+            #- pkg: reload-uwsgi-service
