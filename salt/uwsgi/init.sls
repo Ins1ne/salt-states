@@ -10,19 +10,25 @@ uwsgi:
             - pkg: python-dev
             - pkg: python-pip
 
+/var/log/uwsgi:
+    file.directory:
+        - makedirs: True
+
 uwsgi-service:
     service.running:
         - enable: True
         - name: uwsgi
         - require:
             - file: /etc/init/uwsgi.conf
+            - file: /etc/init/uwsgi.ini
 
-wsgi_server:
-    supervisord:
-        - running
-        - restart: False
+reload-uwsgi-service:
+    cmd.run:
+        - name: "touch /tmp/{{ pillar['project_name'] }}-reload.txt"
         - require:
-            - pkg: supervisor
+            - pip: uwsgi
+            - git: webapp
+            - virtualenv: venv
 
 /etc/init/uwsgi.conf:
     file.managed:
