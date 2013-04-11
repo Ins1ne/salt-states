@@ -27,5 +27,13 @@ wsgi_server:
 /etc/init/uwsgi.conf:
     file.managed:
         - source: salt://uwsgi/uwsgi.conf
+        - template: jinja
+        - require:
+            - pip: uwsgi
+
+/etc/init/uwsgi.ini:
+    file.managed:
+        - source: salt://uwsgi/uwsgi.ini
+        - template: jinja
         - require:
             - pip: uwsgi
