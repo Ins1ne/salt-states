@@ -1,0 +1,13 @@
+{% extends "site_base.html" %}
+{% block body %}
+<h1>{{ poll.question }}</h1>
+
+<ul>
+{% for choice in poll.choice_set.all %}
+    <li>{{ choice.choice }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a class="btn btn-inverse btn-small" href="/polls/{{ poll.id }}/">Vote again?</a>
+<a class="btn btn-success btn-small" href="{% url polls %}">Back to Polls?</a>
+{% endblock %}

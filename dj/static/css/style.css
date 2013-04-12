@@ -1,0 +1,19 @@
+body {
+    padding-top: 60px;
+    background: rgb(210,210,210);
+}
+
+.box {
+    color: rgb(255, 255, 255);
+    width: 800px;
+    height: 200px;
+    padding: 20px;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.4), 0px 0px 30px rgba(0, 0, 0, 0.075);
+    background: rgb(109, 51, 83);
+    position: relative;
+    text-align: center;
+}
+
+.box a {
+    margin: 20px;
+}
