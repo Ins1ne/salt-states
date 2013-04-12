@@ -3,7 +3,7 @@ import os
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True 
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -14,11 +14,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'djangodb',
-         'USER': 'django',
-         'PASSWORD':'secret',
-         'HOST' : 'localhost',
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': '/tmp/django.db',
+         'USER': '',
+         'PASSWORD':'',
+         'HOST' : '',
          'PORT' : '',
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'django',
@@ -107,10 +107,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'simple_django_app.urls'
+ROOT_URLCONF = 'dj.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'simple_django_app.wsgi.application'
+WSGI_APPLICATION = 'dj.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
