@@ -23,7 +23,8 @@ uwsgi-service:
 
 reload-uwsgi-service:
     cmd.run:
-        - name: "touch /tmp/{{ pillar['project_name'] }}-reload.txt"
+        - name: "supervisorctl restart {{ pillar['project_name'] }}"
+        #- name: "touch /tmp/{{ pillar['project_name'] }}-reload.txt"
         - require:
             - pip: uwsgi
             - git: webapp
