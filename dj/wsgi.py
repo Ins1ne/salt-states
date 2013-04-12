@@ -14,12 +14,8 @@ framework.
 
 """
 import os
-import sys
 
-path = "/home/ubuntu/simple_django_app"
-if path not in sys.path:
-    sys.path.append(path)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "simple_django_app.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dj.settings")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
