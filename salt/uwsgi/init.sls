@@ -14,6 +14,13 @@ uwsgi:
     file.directory:
         - makedirs: True
 
+/etc/init/uwsgi.ini:
+    file.managed:
+        - source: salt://uwsgi/uwsgi.ini
+        - template: jinja
+        - require:
+            - pip: uwsgi
+
 uwsgi-service:
     service.running:
         - enable: True
@@ -29,13 +36,6 @@ reload-uwsgi-service:
             - pip: uwsgi
             - git: webapp
             - virtualenv: venv
-
-/etc/init/uwsgi.ini:
-    file.managed:
-        - source: salt://uwsgi/uwsgi.ini
-        - template: jinja
-        - require:
-            - pip: uwsgi
 
 nginxconf:
     file.managed:
