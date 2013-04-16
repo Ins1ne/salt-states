@@ -14,19 +14,31 @@ uwsgi:
     file.directory:
         - makedirs: True
 
-/etc/init/uwsgi.ini:
+/etc/uwsgi/vassals:
+    file.directory:
+        - makedirs: True
+
+vassal_config:
     file.managed:
+        - name: /etc/uwsgi/vassals/uwsgi.ini:
         - source: salt://uwsgi/uwsgi.ini
         - template: jinja
         - require:
             - pip: uwsgi
 
-uwsgi-service:
-    service.running:
-        - enable: True
-        - name: uwsgi
+/etc/init/uwsgi.conf:
+    file.managed:
+        - source: salt://uwsgi/uwsgi.conf
+        - template: jinja
         - require:
-            - file: /etc/init/uwsgi.ini
+            - pip: uwsgi
+
+#uwsgi-service:
+    #service.running:
+        #- enable: True
+        #- name: uwsgi
+        #- require:
+            #- file: /etc/init/uwsgi.ini
 
 reload-uwsgi-service:
     cmd.run:
