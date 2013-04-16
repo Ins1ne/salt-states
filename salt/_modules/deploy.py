@@ -5,5 +5,5 @@ def update_hosts(name):
     pass
 
 
-def start():
-    return __salt__['state.highstate']()
+def start(test=None, **kwargs):
+    return __salt__['state.highstate'](test, **kwargs)
