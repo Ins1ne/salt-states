@@ -20,7 +20,7 @@ uwsgi:
 
 vassal_config:
     file.managed:
-        - name: /etc/uwsgi/vassals/uwsgi.ini
+        - name: "/etc/uwsgi/vassals/{{ pillar['project_name'] }}.ini"
         - source: salt://uwsgi/uwsgi.ini
         - template: jinja
         - require:
@@ -33,21 +33,15 @@ vassal_config:
         - require:
             - pip: uwsgi
 
-#uwsgi-service:
-    #service.running:
-        #- enable: True
-        #- name: uwsgi
-        #- require:
-            #- file: /etc/init/uwsgi.ini
-
 reload-uwsgi-service:
     cmd.run:
-        - name: "supervisorctl restart {{ pillar['project_name'] }}"
-        #- name: "touch /tmp/{{ pillar['project_name'] }}-reload.txt"
+        #- name: "supervisorctl restart {{ pillar['project_name'] }}"
+        - name: "touch /etc/uwsgi/vassals/{{ pillar['project_name'] }}.ini"
         - require:
             - pip: uwsgi
             - git: webapp
             - virtualenv: venv
+            - file: vassal_config
 
 nginxconf:
     file.managed:
