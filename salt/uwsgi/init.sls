@@ -20,7 +20,7 @@ uwsgi:
 
 vassal_config:
     file.managed:
-        - name: /etc/uwsgi/vassals/uwsgi.ini:
+        - name: /etc/uwsgi/vassals/uwsgi.ini
         - source: salt://uwsgi/uwsgi.ini
         - template: jinja
         - require:
