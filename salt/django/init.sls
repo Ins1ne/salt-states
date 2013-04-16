@@ -14,7 +14,7 @@ venv:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
     - no_site_packages: True
-    - runas: ubuntu
+    - runas: {{ pillar['user'] }}
     - requirements: {{ pillar['project_root'] }}/requirements.txt
     - cwd: {{ pillar['project_root'] }}
     - require:
