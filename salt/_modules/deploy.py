@@ -6,4 +6,4 @@ def update_hosts(name):
 
 
 def start():
-    return __salt__['state.highstate']
+    return __salt__['state.highstate']()
