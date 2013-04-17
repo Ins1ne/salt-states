@@ -10,7 +10,7 @@ def start(test=None, **kwargs):
 
 
 def ping():
-    pass
+    return True
 
 
 def update_hosts(name):
