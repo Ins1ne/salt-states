@@ -30,7 +30,7 @@ update_requirements:
       #- pkg: python-virtualenv
       #- pkg: git
       - virtualenv: venv
-      - watch:
-        - git: webapp
+    - watch:
+      - git: webapp
         #- file:
           #- exists: {{ pillar['project_root'] }}/requirements.txt

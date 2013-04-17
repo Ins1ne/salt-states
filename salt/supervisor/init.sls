@@ -18,5 +18,5 @@ reload_supervisor_config:
     - name: "supervisorctl update"
     - watch:
       - file: /etc/supervisor/conf.d/django.conf
-      - require:
-        - pkg: supervisor
+    - require:
+      - pkg: supervisor
