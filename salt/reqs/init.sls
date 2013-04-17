@@ -1,9 +1,7 @@
 require-pkgs:
   pkg.installed:
     - names:
-      - python-dev
       - git
+      - python-dev
       - python-virtualenv
       - python-pip
-      - nginx
-      - supervisor

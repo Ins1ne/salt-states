@@ -2,6 +2,12 @@ include:
   - reqs
   - django
 
+supervisor:
+  pkg:
+    - installed
+  service:
+    - running
+
 /etc/supervisor/conf.d/django.conf:
   file.managed:
     - source: salt://supervisor/django.conf

@@ -50,6 +50,8 @@ nginxconf:
     - mode: 755
 
 nginx:
+  pkg:
+    - installed
   service:
     - running
     - watch:
