@@ -5,3 +5,5 @@ require-pkgs:
       - python-dev
       - python-virtualenv
       - python-pip
+      - mysql-server
+      - libmysqlclient-dev
