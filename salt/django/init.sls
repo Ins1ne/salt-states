@@ -20,17 +20,12 @@ venv:
     - require:
       - pkg: python-virtualenv
       - git: webapp
-      #- file: {{ pillar['project_root'] }}/requirements.txt
 
 update_requirements:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && python manage.py collectstatic --noinput"
     - cwd: {{ pillar['project_root'] }}
     - require:
-      #- pkg: python-virtualenv
-      #- pkg: git
       - virtualenv: venv
     - watch:
       - git: webapp
-        #- file:
-          #- exists: {{ pillar['project_root'] }}/requirements.txt
