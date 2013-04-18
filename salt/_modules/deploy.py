@@ -12,12 +12,17 @@ def start(test=None, **kwargs):
 
 
 def ping():
-    r = requests.get("http://{0}".format(__grains__['id']))
+    status = False
 
-    if r.status_code == 200:
-        return True
-    else:
-        return False
+    try:
+        r = requests.get("http://{0}".format(__grains__['id']))
+
+        if r.status_code == 200:
+            status = True
+    except requests.exceptions.ConnectionError:
+        pass
+
+    return status
 
 
 def update_hosts(name):
