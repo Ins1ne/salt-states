@@ -1,5 +1,7 @@
 # coding: utf-8
 
+import requests
+
 __outputter__ = {
     "start": "highstate",
 }
@@ -10,7 +12,12 @@ def start(test=None, **kwargs):
 
 
 def ping():
-    return True
+    r = requests.get("http://{0}".format(__grains__['id']))
+
+    if r.status_code == 200:
+        return True
+    else:
+        return False
 
 
 def update_hosts(name):

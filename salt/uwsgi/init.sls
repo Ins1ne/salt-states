@@ -19,6 +19,12 @@ uwsgi:
       - user
       - mode
 
+/var/log/uwsgi/emperor.log:
+  file:
+    - managed
+    - user: {{ pillar['web_user'] }}
+    - group: {{ pillar['web_group'] }}
+
 /etc/uwsgi/vassals:
   file.directory:
     - makedirs: True
