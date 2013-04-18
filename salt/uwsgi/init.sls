@@ -10,6 +10,14 @@ uwsgi:
 /var/log/uwsgi:
   file.directory:
     - makedirs: True
+    - group: {{ pillar['web_group'] }}
+    - user: {{ pillar['web_user'] }}
+    - dir_mode: 755
+    - file_mode: 644
+    - recurse:
+      - group
+      - user
+      - mode
 
 /etc/uwsgi/vassals:
   file.directory:

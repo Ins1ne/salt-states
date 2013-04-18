@@ -15,3 +15,6 @@ def ping():
 
 def update_hosts(name):
     pass
+
+def test_pillar():
+    return __pillar__

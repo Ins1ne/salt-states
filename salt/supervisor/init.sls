@@ -1,6 +1,5 @@
 include:
   - reqs
-  - django
 
 supervisor:
   pkg:
