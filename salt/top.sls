@@ -4,3 +4,4 @@ base:
     - django
     - uwsgi
     - supervisor
+    - graphite
