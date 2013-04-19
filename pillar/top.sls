@@ -1,7 +1,7 @@
 base:
   "*":
-    {% if grains['id'].startswith('origin1') %}
-    - origin1
+    {% if grains['group'] %}
+    - {{ grains['group'] }}
     {% else %}
-    - django
+    - default
     {% endif %}

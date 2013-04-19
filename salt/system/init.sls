@@ -1,3 +1,4 @@
+# install required system packages
 require-pkgs:
   pkg.installed:
     - names:

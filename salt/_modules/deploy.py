@@ -18,7 +18,7 @@ def ping():
     status = False
 
     try:
-        r = requests.get("http://{0}".format(__grains__['id']))
+        r = requests.get("http://{0}".format(__grains__['fqdn']))
 
         if r.status_code == 200:
             status = True
@@ -26,6 +26,10 @@ def ping():
         pass
 
     return status
+
+
+def db():
+    pass
 
 
 def test():

@@ -1,3 +1,4 @@
+# manage nginx config
 nginxconf:
   file.managed:
     - name: /etc/nginx/sites-enabled/{{ pillar['project_name'] }}
@@ -6,6 +7,7 @@ nginxconf:
     - makedirs: True
     - mode: 755
 
+# install and run nginx service
 nginx:
   pkg:
     - installed
@@ -14,6 +16,7 @@ nginx:
     - watch:
       - file: nginxconf
 
+# change nginx log permissions
 /var/log/nginx:
   file.directory:
     - group: {{ pillar['web_group'] }}

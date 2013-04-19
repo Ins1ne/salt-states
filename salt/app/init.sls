@@ -2,9 +2,9 @@ include:
   - system
 
 # if we want fetch source from github – uncomment block below,
-# also need change everywhere "file: webapp" to "git: webapp" and remove .git absent
+# also need change everywhere "file: app" to "git: app" and remove .git absent
 #
-#webapp:
+#app:
   #git.latest:
     #- name: {{ pillar['git_repo'] }}
     #- rev: {{ pillar['git_rev'] }}
@@ -13,26 +13,37 @@ include:
     #- require:
       #- pkg: git
 
-webapp:
+# Copy project files
+app:
   file.recurse:
     - name: {{ pillar['project_root'] }}
-    - source: salt://test
-    #- clean: True
+    - source: salt://app/{{ pillar['project_dir'] }}
     - require:
       - pkg: git
 
+# remove git repository
 {{ pillar['project_root'] }}/.git:
   file.absent:
     - require:
-      - file: webapp
+      - file: app
 
-js:
-  file.recurse:
-    - name: {{ pillar['project_root'] }}/dj/static/js
-    - source: satl:///../js
+# configure database_settings
+database_settings:
+  file.managed:
+    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/database_settings.py:
+    - source: salt://app/database_settings.py
     - require:
-      - file: webapp
+      - file: app
 
+# copy media files
+media:
+  file.recurse:
+    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/media
+    - source: salt://app/origins/{{ pillar['group'] }}/{{ pillar['media'] }}
+    - require:
+      - file: app
+
+# create and manage virtualenv
 venv:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
@@ -42,13 +53,15 @@ venv:
     - cwd: {{ pillar['project_root'] }}
     - require:
       - pkg: python-virtualenv
-      - file: webapp
+      - file: app
 
-update_requirements:
+# collecting static files
+collectstatic:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && python manage.py collectstatic --noinput"
     - cwd: {{ pillar['project_root'] }}
     - require:
       - virtualenv: venv
+      - file: database_settings
     - watch:
-      - file: webapp
+      - file: app
