@@ -35,6 +35,12 @@ database_settings:
     - require:
       - file: app
 
+# create media directory
+media_dir:
+  file.directory:
+    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/media
+    - makedirs: True
+
 # copy media files
 media:
   file.recurse:
@@ -42,6 +48,7 @@ media:
     - source: salt://app/origins/{{ pillar['group'] }}/{{ pillar['media'] }}
     - require:
       - file: app
+      - file: media_dir
 
 # create and manage virtualenv
 venv:

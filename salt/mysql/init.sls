@@ -13,7 +13,7 @@ include:
 # copy origin db schema dump
 /tmp/origin_schema.sql:
   file.managed:
-    - source: salt://mysql/origin_shema.sql
+    - source: salt://mysql/origin_schema.sql
     - template: jinja
     - requere:
       - pkg: mysql-server
