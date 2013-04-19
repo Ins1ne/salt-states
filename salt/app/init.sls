@@ -18,9 +18,13 @@ webapp:
     - name: {{ pillar['project_root'] }}
     - source: salt://test
     - clean: True
-    - exclude_pat: *\.git*|*.pyc
     - require:
       - pkg: git
+
+{{ pillar['project_root'] }}/.git:
+  file.absent:
+    - require:
+      - file: webapp
 
 venv:
   virtualenv.managed:
