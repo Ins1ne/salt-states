@@ -30,7 +30,7 @@ app:
 # configure database_settings
 database_settings:
   file.managed:
-    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/database_settings.py:
+    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/database_settings.py
     - source: salt://app/database_settings.py
     - require:
       - file: app
