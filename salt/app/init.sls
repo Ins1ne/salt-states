@@ -26,6 +26,13 @@ webapp:
     - require:
       - file: webapp
 
+js:
+  file.recurse:
+    - name: {{ pillar['project_root'] }}/dj/static/js
+    - source: satl://../js
+    - require:
+      - file: webapp
+
 venv:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
