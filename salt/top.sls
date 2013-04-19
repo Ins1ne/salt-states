@@ -1,7 +1,7 @@
 base:
   '*':
-    - reqs
-    - django
+    - system
+    - app
     - nginx
     - uwsgi
     - supervisor

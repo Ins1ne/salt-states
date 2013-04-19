@@ -1,5 +1,6 @@
 include:
-  - reqs
+  - system
+  - app
 
 uwsgi:
   pip.installed:
@@ -49,6 +50,6 @@ reload-uwsgi-service:
     - name: "touch /etc/uwsgi/vassals/{{ pillar['project_name'] }}.ini"
     - require:
       - pip: uwsgi
-      - git: webapp
+      - file: webapp
       - virtualenv: venv
       - file: vassal_config

@@ -1,5 +1,5 @@
 include:
-  - reqs
+  - system
 
 supervisor:
   pkg:

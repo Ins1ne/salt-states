@@ -1,14 +1,17 @@
 include:
-  - reqs
+  - system
 
+# if we want fetch source from github – uncomment block below,
+# also need change everywhere "file: webapp" to "git: webapp"
+#
 #webapp:
-  #  git.latest:
-    #  - name: {{ pillar['git_repo'] }}
+  #git.latest:
+    #- name: {{ pillar['git_repo'] }}
     #- rev: {{ pillar['git_rev'] }}
     #- target: {{ pillar['project_root'] }}
     #- force: True
     #- require:
-      #  - pkg: git
+      #- pkg: git
 
 webapp:
   file.recurse:
@@ -27,7 +30,6 @@ venv:
     - cwd: {{ pillar['project_root'] }}
     - require:
       - pkg: python-virtualenv
-      #- git: webapp
       - file: webapp
 
 update_requirements:
@@ -37,5 +39,4 @@ update_requirements:
     - require:
       - virtualenv: venv
     - watch:
-      #- git: webapp
       - file: webapp
