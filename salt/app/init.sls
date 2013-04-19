@@ -17,7 +17,7 @@ webapp:
   file.recurse:
     - name: {{ pillar['project_root'] }}
     - source: salt://test
-    - clean: True
+    #- clean: True
     - require:
       - pkg: git
 
@@ -29,7 +29,7 @@ webapp:
 js:
   file.recurse:
     - name: {{ pillar['project_root'] }}/dj/static/js
-    - source: satl://../js
+    - source: satl:///../js
     - require:
       - file: webapp
 
