@@ -18,6 +18,7 @@ webapp:
     - name: {{ pillar['project_root'] }}
     - source: salt://test
     - clean: True
+    - exclude_pat: .git
     - require:
       - pkg: git
 
