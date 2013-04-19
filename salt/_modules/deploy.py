@@ -28,5 +28,5 @@ def ping():
     return status
 
 
-def test_pillar():
-    return __pillar__
+def test():
+    return 'sss'

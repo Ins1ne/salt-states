@@ -2,7 +2,7 @@ include:
   - system
 
 # if we want fetch source from github – uncomment block below,
-# also need change everywhere "file: webapp" to "git: webapp"
+# also need change everywhere "file: webapp" to "git: webapp" and remove .git absent
 #
 #webapp:
   #git.latest:
