@@ -10,3 +10,4 @@ web_group: vagrant
 db_master: origin_db
 db_slave: satellite_defaul
 group: defaul
+media: media
