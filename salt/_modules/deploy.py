@@ -12,6 +12,9 @@ def start(test=None, **kwargs):
 
 
 def ping():
+    """
+    Check main page status code
+    """
     status = False
 
     try:
@@ -24,9 +27,6 @@ def ping():
 
     return status
 
-
-def update_hosts(name):
-    pass
 
 def test_pillar():
     return __pillar__

@@ -1,12 +1,20 @@
 include:
   - reqs
 
+#webapp:
+  #  git.latest:
+    #  - name: {{ pillar['git_repo'] }}
+    #- rev: {{ pillar['git_rev'] }}
+    #- target: {{ pillar['project_root'] }}
+    #- force: True
+    #- require:
+      #  - pkg: git
+
 webapp:
-  git.latest:
-    - name: {{ pillar['git_repo'] }}
-    - rev: {{ pillar['git_rev'] }}
-    - target: {{ pillar['project_root'] }}
-    - force: True
+  file.recurse:
+    - name: {{ pillar['project_root'] }}
+    - source: salt://test
+    - clean: True
     - require:
       - pkg: git
 
@@ -19,7 +27,8 @@ venv:
     - cwd: {{ pillar['project_root'] }}
     - require:
       - pkg: python-virtualenv
-      - git: webapp
+      #- git: webapp
+      - file: webapp
 
 update_requirements:
   cmd.run:
@@ -28,4 +37,5 @@ update_requirements:
     - require:
       - virtualenv: venv
     - watch:
-      - git: webapp
+      #- git: webapp
+      - file: webapp
