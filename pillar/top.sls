@@ -1,9 +1,7 @@
 base:
   "*":
-    {% if grains['group'] == 'django' %}
-    - django
-    {% elif grains['group'] == 'origin1' %}
-    - origin1
+    {% if grains['group'] %}
+    - {{ grains['group'] }}
     {% else %}
     - default
     {% endif %}

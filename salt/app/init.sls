@@ -27,13 +27,6 @@ app:
     - require:
       - file: app
 
-group:
-  file.managed:
-    - name: {{ pillar['project_root'] }}/{{ grains['group'] }}
-    - source: salt://app/database_settings.py
-    - require:
-      - file: app
-
 # configure database_settings
 database_settings:
   file.managed:
@@ -42,24 +35,8 @@ database_settings:
     - require:
       - file: app
 
-# create media directory
-media_dir:
-  file.directory:
-    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/media
-    - makedirs: True
-
-# copy media files
-media:
-  file.recurse:
-    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/media
-    - source: salt://app/origins/{{ pillar['group'] }}/{{ pillar['media'] }}
-    #- source: salt://app/origins/django/{{ pillar['media'] }}
-    - require:
-      - file: app
-      - file: media_dir
-
 # create and manage virtualenv
-venv:
+env:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
     - no_site_packages: True
@@ -76,7 +53,7 @@ collectstatic:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && python manage.py collectstatic --noinput"
     - cwd: {{ pillar['project_root'] }}
     - require:
-      - virtualenv: venv
+      - virtualenv: env
       - file: database_settings
     - watch:
       - file: app

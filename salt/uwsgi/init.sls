@@ -58,5 +58,5 @@ reload-uwsgi-service:
     - require:
       - pip: uwsgi
       - file: app
-      - virtualenv: venv
+      - virtualenv: env
       - file: vassal_config
