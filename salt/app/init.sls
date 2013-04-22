@@ -40,6 +40,7 @@ env:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
     - no_site_packages: True
+    - distribute: True
     - runas: {{ pillar['user'] }}
     - requirements: {{ pillar['project_root'] }}/conf/requirements/requirements.txt
     - cwd: {{ pillar['project_root'] }}
