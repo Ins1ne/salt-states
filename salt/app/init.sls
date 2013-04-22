@@ -45,7 +45,8 @@ media_dir:
 media:
   file.recurse:
     - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/media
-    - source: salt://app/origins/{{ pillar['group'] }}/{{ pillar['media'] }}
+    #- source: salt://app/origins/{{ pillar['group'] }}/{{ pillar['media'] }}
+    - source: salt://app/origins/django/{{ pillar['media'] }}
     - require:
       - file: app
       - file: media_dir
