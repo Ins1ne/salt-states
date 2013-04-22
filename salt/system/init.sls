@@ -8,3 +8,10 @@ require-pkgs:
       - python-pip
       - mysql-server
       - libmysqlclient-dev
+
+# upgrade distribute
+distribute:
+  cmd.run:
+    - name: "easy_install -U distribute"
+    - require:
+      - pkg: require-pkgs

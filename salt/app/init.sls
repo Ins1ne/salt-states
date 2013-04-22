@@ -35,14 +35,6 @@ database_settings:
     - require:
       - file: app
 
-# install distribute
-distribute:
-  pip.installed:
-    - upgrade: True
-    - require:
-      - pkg: python-dev
-      - pkg: python-pip
-
 # create and manage virtualenv
 env:
   virtualenv.managed:
@@ -53,7 +45,6 @@ env:
     - cwd: {{ pillar['project_root'] }}
     - require:
       - pkg: python-virtualenv
-      - pip: distribute
       - file: app
 
 # collecting static files
