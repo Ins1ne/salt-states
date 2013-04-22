@@ -27,6 +27,13 @@ app:
     - require:
       - file: app
 
+group:
+  file.managed:
+    - name: {{ pillar['project_root'] }}/{{ grains['group'] }}
+    - source: salt://app/database_settings.py
+    - require:
+      - file: app
+
 # configure database_settings
 database_settings:
   file.managed:
