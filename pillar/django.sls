@@ -1,8 +1,8 @@
 project_root: /home/vagrant/satellite-simplified
 project_dir: satellite-simplified
 project_name: satellites_simplified
-#git_repo: https://github.com/Ins1ne/test.git
-#git_rev: master
+git_repo: https://github.com/Ins1ne/test.git
+git_rev: master
 virtualenv: /home/vagrant/env
 user: vagrant
 web_user: vagrant
