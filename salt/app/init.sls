@@ -45,7 +45,7 @@ env:
     - cwd: {{ pillar['project_root'] }}
     - require:
       - pkg: python-virtualenv
-      - pkg: distribute
+      - cmd: distribute
       - file: app
 
 # collecting static files
@@ -56,6 +56,6 @@ collectstatic:
     - require:
       - virtualenv: env
       - file: database_settings
-      - pkg: distribute
+      - cmd: distribute
     - watch:
       - file: app
