@@ -60,8 +60,8 @@ reload-uwsgi-service:
   cmd.run:
     - name: "touch /etc/uwsgi/vassals/{{ pillar['project_name'] }}.ini"
     - require:
-      - pip: uwsgi
-      - file: app
-      - virtualenv: env
       - file: vassals_directory
       - file: vassal_config
+      - file: app
+      - pip: uwsgi
+      - virtualenv: env

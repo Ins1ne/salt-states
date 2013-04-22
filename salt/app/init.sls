@@ -38,6 +38,7 @@ database_settings:
 # install distribute
 distribute:
   pip.installed:
+    - upgrade: True
     - require:
       - pkg: python-dev
       - pkg: python-pip
