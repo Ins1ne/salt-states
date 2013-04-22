@@ -41,7 +41,7 @@ env:
     - name: {{ pillar['virtualenv'] }}
     - no_site_packages: True
     - runas: {{ pillar['user'] }}
-    - requirements: {{ pillar['project_root'] }}/requirements.txt
+    - requirements: {{ pillar['project_root'] }}/conf/requirements/requirements.txt
     - cwd: {{ pillar['project_root'] }}
     - require:
       - pkg: python-virtualenv
