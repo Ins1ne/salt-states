@@ -39,7 +39,7 @@ database_settings:
 env:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
-    - no_site_packages: True
+    #- no_site_packages: True
     - system_site_packages: True
     - runas: {{ pillar['user'] }}
     - requirements: {{ pillar['project_root'] }}/conf/requirements/requirements.txt
