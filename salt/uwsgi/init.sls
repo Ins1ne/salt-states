@@ -10,8 +10,9 @@ uwsgi:
       - pkg: python-pip
 
 # create log directory
-/var/log/uwsgi:
+uwsgi_log_directory:
   file.directory:
+    - name: /var/log/uwsgi
     - makedirs: True
     - group: {{ pillar['web_group'] }}
     - user: {{ pillar['web_user'] }}
@@ -24,14 +25,16 @@ uwsgi:
 
 # create log file
 /var/log/uwsgi/emperor.log:
-  file:
-    - managed
+  file.managed:
     - user: {{ pillar['web_user'] }}
     - group: {{ pillar['web_group'] }}
+    - require:
+      - file: uwsgi_log_directory
 
 # create directories for vassals
-/etc/uwsgi/vassals:
+vassals_directory:
   file.directory:
+    - name: /etc/uwsgi/vassals
     - makedirs: True
 
 # manage app config for uwsgi
@@ -42,6 +45,7 @@ vassal_config:
     - template: jinja
     - require:
       - pip: uwsgi
+      - file: vassals_directory
 
 # manage uwsgi startup config
 /etc/init/uwsgi.conf:
@@ -59,4 +63,5 @@ reload-uwsgi-service:
       - pip: uwsgi
       - file: app
       - virtualenv: env
+      - file: vassals_directory
       - file: vassal_config
