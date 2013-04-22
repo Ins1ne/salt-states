@@ -31,6 +31,7 @@ app:
 database_settings:
   file.managed:
     - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/database_settings.py
+    - template: jinja
     - source: salt://app/database_settings.py
     - require:
       - file: app
