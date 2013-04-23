@@ -11,6 +11,13 @@ def start(test=None, **kwargs):
     return __salt__['state.highstate'](test, **kwargs)
 
 
+def migrage_sat():
+    cmd = ". {0}/bin/activate && python manage.py migrate sat".format(__pillar__['virtualenv'])
+    cwd = __pillar__['project_root']
+
+    return __salt__['cmd.run'](cmd, cwd=cwd)
+
+
 def ping():
     """
     Check main page status code
