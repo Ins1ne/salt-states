@@ -11,7 +11,7 @@ def start(test=None, **kwargs):
     return __salt__['state.highstate'](test, **kwargs)
 
 
-def migrage_sat():
+def migrate_sat():
     cmd = ". {0}/bin/activate && python manage.py migrate sat".format(__pillar__['virtualenv'])
     cwd = __pillar__['project_root']
 
