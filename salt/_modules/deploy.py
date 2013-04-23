@@ -13,7 +13,7 @@ def start(test=None, **kwargs):
 
 def migrate_sat():
     cmd = ". {0}/bin/activate && python manage.py migrate sat".format(__pillar__['virtualenv'])
-    cwd = __pillar__['project_root']
+    cwd = __pillar__['project']['root']
 
     return __salt__['cmd.run'](cmd, cwd=cwd)
 

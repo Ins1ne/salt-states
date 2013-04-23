@@ -4,11 +4,11 @@ include:
 # Copy project files
 app:
   file.recurse:
-    - name: {{ pillar['project_root'] }}
-    - source: salt://app/{{ pillar['project_dir'] }}
+    - name: {{ pillar['project']['root'] }}
+    - source: salt://app/{{ pillar['project']['dir'] }}
 
 # remove git repository
-{{ pillar['project_root'] }}/.git:
+{{ pillar['project']['root'] }}/.git:
   file.absent:
     - require:
       - file: app
@@ -16,7 +16,7 @@ app:
 # configure database_settings
 database_settings:
   file.managed:
-    - name: {{ pillar['project_root'] }}/{{ pillar['project_name'] }}/database_settings.py
+    - name: {{ pillar['project']['root'] }}/{{ pillar['project']['name'] }}/database_settings.py
     - template: jinja
     - source: salt://app/database_settings.py
     - require:
@@ -26,9 +26,9 @@ database_settings:
 #env:
   #virtualenv.managed:
     #- name: {{ pillar['virtualenv'] }}
-    #- runas: {{ pillar['user'] }}
-    #- requirements: {{ pillar['project_root'] }}/conf/requirements/requirements.txt
-    #- cwd: {{ pillar['project_root'] }}
+    #- runas: {{ pillar['system']['user'] }}
+    #- requirements: {{ pillar['project']['root'] }}/conf/requirements/requirements.txt
+    #- cwd: {{ pillar['project']['root'] }}
     #- require:
       #- pkg: python-virtualenv
       #- cmd: distribute
@@ -37,8 +37,8 @@ database_settings:
 env:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
-    - runas: {{ pillar['user'] }}
-    - cwd: {{ pillar['project_root'] }}
+    - runas: {{ pillar['system']['user'] }}
+    - cwd: {{ pillar['project']['root'] }}
     - require:
       - pkg: python-virtualenv
 
@@ -51,7 +51,7 @@ update_distribute:
 
 install_requirements:
   cmd.run:
-    - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -r {{ pillar['project_root'] }}/conf/requirements/requirements.txt"
+    - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -r {{ pillar['project']['root'] }}/conf/requirements/requirements.txt"
     - require:
       - file: app
       - virtualenv: env
@@ -61,7 +61,7 @@ install_requirements:
 collectstatic:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && python manage.py collectstatic --noinput"
-    - cwd: {{ pillar['project_root'] }}
+    - cwd: {{ pillar['project']['root'] }}
     - require:
       - virtualenv: env
       - file: database_settings

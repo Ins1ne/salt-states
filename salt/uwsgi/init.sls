@@ -14,8 +14,8 @@ uwsgi_log_directory:
   file.directory:
     - name: /var/log/uwsgi
     - makedirs: True
-    - group: {{ pillar['web_group'] }}
-    - user: {{ pillar['web_user'] }}
+    - group: {{ pillar['system']['web_group'] }}
+    - user: {{ pillar['system']['web_user'] }}
     - dir_mode: 755
     - file_mode: 644
     - recurse:
@@ -26,8 +26,8 @@ uwsgi_log_directory:
 # create log file
 /var/log/uwsgi/emperor.log:
   file.managed:
-    - user: {{ pillar['web_user'] }}
-    - group: {{ pillar['web_group'] }}
+    - user: {{ pillar['system']['web_user'] }}
+    - group: {{ pillar['system']['web_group'] }}
     - require:
       - file: uwsgi_log_directory
 
@@ -40,7 +40,7 @@ vassals_directory:
 # manage app config for uwsgi
 vassal_config:
   file.managed:
-    - name: "/etc/uwsgi/vassals/{{ pillar['project_name'] }}.ini"
+    - name: "/etc/uwsgi/vassals/{{ pillar['project']['name'] }}.ini"
     - source: salt://uwsgi/uwsgi.ini
     - template: jinja
     - require:
@@ -58,7 +58,7 @@ vassal_config:
 # soft reload uwsgi service
 reload-uwsgi-service:
   cmd.run:
-    - name: "touch /etc/uwsgi/vassals/{{ pillar['project_name'] }}.ini"
+    - name: "touch /etc/uwsgi/vassals/{{ pillar['project']['name'] }}.ini"
     - require:
       - file: vassals_directory
       - file: vassal_config

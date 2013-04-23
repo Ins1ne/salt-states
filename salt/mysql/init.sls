@@ -29,6 +29,23 @@ include:
       - service: mysql
 
 # check if database exists
-#database_exists:
-  #mysql_database.present:
-    #- name: {{ pillar['db_slave'] }}
+database_exists:
+  mysql_database.present:
+    - name: {{ pillar['db']['slave']['name'] }}
+
+# chech if user exists
+{{ pillar['db']['slave']['user'] }}:
+  mysql_user.present:
+    - host: {{ pillar['db']['slave']['host'] }}
+    - port: {{ pillar['db']['slave']['port'] }}
+    - password: {{ pillar['db']['slave']['password'] }}
+
+# check user priveleges to our database
+check_privilegies:
+  mysql_grants.present:
+    - grant: all priveleges
+    - database: {{ pillar['db']['slave']['name'] }}
+    - user: {{ pillar['db']['slave']['user'] }}
+    - require:
+      - mysql_database: database_exists
+      - mysql_user: {{ pillar['db']['slave']['user'] }}
