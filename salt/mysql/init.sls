@@ -44,7 +44,7 @@ database_exists:
     - require:
       - pkg: python-mysqldb
 
-# check user priveleges to our database
+# grant all priveleges for user to our database
 check_privileges:
   mysql_grants.present:
     - grant: all privileges
