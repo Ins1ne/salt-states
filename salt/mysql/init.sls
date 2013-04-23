@@ -42,7 +42,7 @@ database_exists:
     - port: {{ pillar['db']['slave']['port'] }}
     - password: {{ pillar['db']['slave']['password'] }}
     - require:
-      - pkg: python-mysql
+      - pkg: python-mysqldb
 
 # check user priveleges to our database
 check_privilegies:
