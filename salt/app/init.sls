@@ -1,25 +1,11 @@
 include:
   - system
 
-# if we want fetch source from github – uncomment block below,
-# also need change everywhere "file: app" to "git: app" and remove .git absent
-#
-#app:
-  #git.latest:
-    #- name: {{ pillar['git_repo'] }}
-    #- rev: {{ pillar['git_rev'] }}
-    #- target: {{ pillar['project_root'] }}
-    #- force: True
-    #- require:
-      #- pkg: git
-
 # Copy project files
 app:
   file.recurse:
     - name: {{ pillar['project_root'] }}
     - source: salt://app/{{ pillar['project_dir'] }}
-    - require:
-      - pkg: git
 
 # remove git repository
 {{ pillar['project_root'] }}/.git:
