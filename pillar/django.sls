@@ -7,7 +7,7 @@ db:
     name: origin_db
     user: repl
     password: repl
-    host: localhost
+    host: 172.16.42.10
     port: ""
   slave:
     name: satellite_default
