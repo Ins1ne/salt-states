@@ -48,7 +48,7 @@ database_exists:
 check_privileges:
   mysql_grants.present:
     - grant: all privileges
-    - database: {{ pillar['db']['slave']['name'] }}
+    - database: {{ pillar['db']['slave']['name'] }}.*
     - user: {{ pillar['db']['slave']['user'] }}
     - require:
       - mysql_database: database_exists
