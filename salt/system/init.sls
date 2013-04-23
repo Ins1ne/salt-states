@@ -3,6 +3,7 @@ require-pkgs:
   pkg.installed:
     - names:
       - gcc
+      - make
       - python-dev
       - python-virtualenv
       - python-pip
