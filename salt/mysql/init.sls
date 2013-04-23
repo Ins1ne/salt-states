@@ -55,7 +55,8 @@ database_exists:
 # grant all priveleges for user to our database
 check_privileges:
   mysql_grants.present:
-    - grant: all privileges
+    #- grant: all privileges
+    - grant: super
     - database: {{ pillar['db']['slave']['name'] }}.*
     - user: {{ pillar['db']['slave']['user'] }}
     - require:
