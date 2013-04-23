@@ -33,7 +33,7 @@ database_exists:
   mysql_database.present:
     - name: {{ pillar['db']['slave']['name'] }}
     - require:
-      - pkg: python-mysql
+      - pkg: python-mysqldb
 
 # chech if user exists
 {{ pillar['db']['slave']['user'] }}:
