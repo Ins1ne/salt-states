@@ -20,13 +20,21 @@ include:
       #- service: mysql
 
 # manage mysql config
-/etc/mysql/my.cnf:
+my_cfg:
   file.managed:
+    - name: /etc/mysql/my.cnf
     - source: salt://mysql/my.cnf
     - template: jinja
     - requere:
       - pkg: mysql-server
       - service: mysql
+
+# restart mysql service if file changed
+mysql:
+  service:
+    - running
+    - watch:
+      - file: my_cfg
 
 # check if database exists
 database_exists:
