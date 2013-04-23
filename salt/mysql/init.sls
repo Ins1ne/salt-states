@@ -32,6 +32,8 @@ include:
 database_exists:
   mysql_database.present:
     - name: {{ pillar['db']['slave']['name'] }}
+    - require:
+      - pkg: python-mysql
 
 # chech if user exists
 {{ pillar['db']['slave']['user'] }}:
@@ -39,6 +41,8 @@ database_exists:
     - host: {{ pillar['db']['slave']['host'] }}
     - port: {{ pillar['db']['slave']['port'] }}
     - password: {{ pillar['db']['slave']['password'] }}
+    - require:
+      - pkg: python-mysql
 
 # check user priveleges to our database
 check_privilegies:
