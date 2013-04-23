@@ -45,7 +45,7 @@ database_exists:
       - pkg: python-mysqldb
 
 # check user priveleges to our database
-check_privilegies:
+check_privileges:
   mysql_grants.present:
     - grant: all privileges
     - database: {{ pillar['db']['slave']['name'] }}
