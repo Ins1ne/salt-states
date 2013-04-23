@@ -8,4 +8,4 @@ require-pkgs:
       - mysql-server
       - libmysqlclient-dev
       - redis-server
-      - python-mysql
+      - python-mysqldb
