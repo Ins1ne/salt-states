@@ -12,14 +12,14 @@ media_proxy: https://s.gamestand.org/media/
 db:
   master:
     name: origin_db
-    user: replica_user
-    password: replica_password
+    user: repl
+    password: repl
     host: localhost
     port: ""
   slave:
     name: satellite_default
-    user: local_user
-    password: local_password
+    user: vagrant
+    password: vagrant
     host: localhost
     port: ""
 

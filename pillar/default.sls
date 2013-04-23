@@ -22,8 +22,8 @@ db:
     port: ""
   slave:
     name: satellite_default
-    user: local_user
-    password: local_password
+    user: vagrant
+    password: vagrant
     host: localhost
     port: ""
 
