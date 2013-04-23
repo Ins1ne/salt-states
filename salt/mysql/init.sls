@@ -58,7 +58,7 @@ check_privileges:
     #- grant: all privileges
     - grant: super
     #- database: {{ pillar['db']['slave']['name'] }}.*
-    - database: *.*
+    - database: \*.*
     - user: {{ pillar['db']['slave']['user'] }}
     - require:
       - mysql_database: database_exists
