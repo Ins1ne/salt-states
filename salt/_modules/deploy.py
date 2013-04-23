@@ -19,7 +19,7 @@ def migrate_sat():
 
 
 def connect_db_to_master():
-    cmd = 'mysql -u{0} -p{1} –e "STOP SLAVE; CHANGE MASTER TO MASTER_HOST=\'{2}\', MASTER_USER=\'{3}\', MASTER_PASSWORD=\'{4}\', MASTER_PORT=\'{5}\'; START SLAVE;"'.format(
+    cmd = 'mysql -u{0} -p{1} -e "STOP SLAVE; CHANGE MASTER TO MASTER_HOST=\'{2}\', MASTER_USER=\'{3}\', MASTER_PASSWORD=\'{4}\', MASTER_PORT=\'{5}\'; START SLAVE;"'.format(
         __pillar__['db']['slave']['user'],
         __pillar__['db']['slave']['password'],
         __pillar__['db']['master']['host'],
