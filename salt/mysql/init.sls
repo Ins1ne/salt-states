@@ -53,11 +53,19 @@ database_exists:
       - pkg: python-mysqldb
 
 # grant all priveleges for user to our database
-check_privileges:
+all_privileges:
   mysql_grants.present:
-    #- grant: all privileges
+    - grant: all privileges
+    - database: {{ pillar['db']['slave']['name'] }}.*
+    - user: {{ pillar['db']['slave']['user'] }}
+    - require:
+      - mysql_database: database_exists
+      - mysql_user: {{ pillar['db']['slave']['user'] }}
+
+# grant super priveleges for user to our database
+super_privileges:
+  mysql_grants.present:
     - grant: super
-    #- database: {{ pillar['db']['slave']['name'] }}.*
     - database: "*.*"
     - user: {{ pillar['db']['slave']['user'] }}
     - require:
