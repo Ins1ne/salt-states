@@ -12,15 +12,19 @@ def start(test=None, **kwargs):
 
 
 def migrate_sat():
-    cmd = ". {0}/bin/activate && python manage.py migrate sat".format(__pillar__['virtualenv'])
+    cmd = ". {0}/bin/activate && python manage.py migrate sat".format(
+        __pillar__['virtualenv']
+    )
     cwd = __pillar__['project']['root']
 
     return __salt__['cmd.run'](cmd, cwd=cwd)
 
 
-def connect_db_to_master():
+def connect_slave_to_master():
     if __pillar__['db']['master']['port']:
-        port =  ', MASTER_PORT=\'{5}\''.format(__pillar__['db']['master']['port'])
+        port =  ', MASTER_PORT=\'{5}\''.format(
+            __pillar__['db']['master']['port']
+        )
     else:
         port = "";
 
@@ -35,6 +39,56 @@ def connect_db_to_master():
 
     return __salt__['cmd.run'](cmd)
 
+
+def install_mysql_extension():
+    cmd = "cd {0}/conf/sql/udf/ && sh install.sh".format(
+        __pillar__['project']['root']
+    )
+
+    return __salt__['cmd.run'](cmd)
+
+
+def create_south_tables():
+    cmd = "cd {0} && . {1}/bin/activate && python manage.py reset south --noinput".format(
+        __pillar__['project']['root'],
+        __pillar__['virtualenv'],
+    )
+
+    return __salt__['cmd.run'](cmd)
+
+
+def mysql_import_file(path):
+    if __pillar__['db']['slave']['port']:
+        port = " -P{0}".format(__pillar__['db']['slave']['port'])
+    else:
+        port = ""
+
+    cmd = "mysql -u{0} -p{1} -h{2}{3} {4} < {5}".format(
+        __pillar__['db']['slave']['user'],
+        __pillar__['db']['slave']['password'],
+        __pillar__['db']['slave']['host'],
+        port,
+        __pillar__['db']['slave']['name'],
+        path,
+    )
+
+    return __salt__['cmd.run'](cmd)
+
+
+def mysql_restart():
+    cmd = 'service mysql restart'
+
+    return __salt__['cmd.run'](cmd)
+
+
+def mysql_copy_structure(source, path):
+    return __salt__['cp.get_file']('salt://mysql/sql/structuredump.sql',
+                                   '/tmp/stucturedump.sql')
+
+
+def mysql_copy_data(source, path):
+    return __salt__['cp.get_file']('salt://mysql/sql/datadump.sql',
+                                   '/tmp/datadump.sql')
 
 def ping():
     """
@@ -51,11 +105,3 @@ def ping():
         pass
 
     return status
-
-
-def db():
-    pass
-
-
-def test():
-    return 'sss'
