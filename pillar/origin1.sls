@@ -15,6 +15,7 @@ db:
     password: vagrant
     host: localhost
     port: ""
+    root_password: ""
 
 project:
   root: /home/vagrant/satellite-simplified
