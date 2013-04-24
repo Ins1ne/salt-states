@@ -11,6 +11,15 @@ def start(test=None, **kwargs):
     return __salt__['state.highstate'](test, **kwargs)
 
 
+def initialize_games():
+    cmd = ". {0}/bin/activate && python apps/sat/setup.py".format(
+        __pillar__['virtualenv']
+    )
+    cwd = __pillar__['project']['root']
+
+    return __salt__['cmd.run'](cmd, cwd=cwd)
+
+
 def migrate_sat():
     cmd = ". {0}/bin/activate && python manage.py migrate sat".format(
         __pillar__['virtualenv']
@@ -81,12 +90,17 @@ def mysql_restart():
     return __salt__['cmd.run'](cmd)
 
 
-def mysql_copy_structure(source, path):
+def mysql_copy_file(filename):
+    return __salt__['cp.get_file']('salt://mysql/sql/{0}'.format(filename),
+                                   '/tmp/{0}'.format(filename))
+
+
+def mysql_copy_structure():
     return __salt__['cp.get_file']('salt://mysql/sql/structuredump.sql',
                                    '/tmp/stucturedump.sql')
 
 
-def mysql_copy_data(source, path):
+def mysql_copy_data():
     return __salt__['cp.get_file']('salt://mysql/sql/datadump.sql',
                                    '/tmp/datadump.sql')
 
