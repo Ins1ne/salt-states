@@ -11,7 +11,6 @@ app:
   file.recurse:
     - name: {{ pillar['project']['root'] }}
     - source: salt://app/{{ pillar['project']['dir'] }}
-    - clean: True
     - exclude_pat: '*.pyc'
     - exclude: '*.pyc'
     - require:
