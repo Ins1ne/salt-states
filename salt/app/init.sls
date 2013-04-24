@@ -1,6 +1,11 @@
 include:
   - system
 
+# remove app directory on minion
+remove_app:
+  file.absent:
+    - name: {{ pillar['project']['root'] }}
+
 # Copy project files
 app:
   file.recurse:
@@ -8,7 +13,9 @@ app:
     - source: salt://app/{{ pillar['project']['dir'] }}
     - clean: True
     - exclude_pat: '*.pyc'
-    - exclude: E@(*.pyc)
+    - exclude: '*.pyc'
+    - require:
+      - file: remove_app
     - group: {{ pillar['system']['web_group'] }}
     - user: {{ pillar['system']['web_user'] }}
     - dir_mode: 755
