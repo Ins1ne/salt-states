@@ -6,6 +6,15 @@ app:
   file.recurse:
     - name: {{ pillar['project']['root'] }}
     - source: salt://app/{{ pillar['project']['dir'] }}
+    - clean: True
+    - group: {{ pillar['system']['web_group'] }}
+    - user: {{ pillar['system']['web_user'] }}
+    - dir_mode: 755
+    - file_mode: 644
+    - recurse:
+      - group
+      - user
+      - mode
 
 # remove git repository
 {{ pillar['project']['root'] }}/.git:
@@ -19,6 +28,9 @@ database_settings:
     - name: {{ pillar['project']['root'] }}/{{ pillar['project']['name'] }}/database_settings.py
     - template: jinja
     - source: salt://app/database_settings.py
+    - group: {{ pillar['system']['web_group'] }}
+    - user: {{ pillar['system']['web_user'] }}
+    - mode: 644
     - require:
       - file: app
 
