@@ -7,6 +7,7 @@ app:
     - name: {{ pillar['project']['root'] }}
     - source: salt://app/{{ pillar['project']['dir'] }}
     - clean: True
+    - exclude_pat: '*.pyc'
     - group: {{ pillar['system']['web_group'] }}
     - user: {{ pillar['system']['web_user'] }}
     - dir_mode: 755
