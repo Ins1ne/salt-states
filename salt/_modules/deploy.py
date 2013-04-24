@@ -63,7 +63,8 @@ def install_mysql_extension():
     else:
         port = ""
 
-    mysql_cmd = "mysql -u{0} -p{1} -h{2}{3} {4} < {5}".format(
+    mysql_cmd = "cd {0}/conf/sql/udf/ && mysql -u{0} -p{1} -h{2}{3} {4} < {5}".format(
+        __pillar__['project']['root'],
         __pillar__['db']['slave']['user'],
         __pillar__['db']['slave']['password'],
         __pillar__['db']['slave']['host'],
