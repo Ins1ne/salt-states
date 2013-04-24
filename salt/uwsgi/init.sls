@@ -57,8 +57,8 @@ vassal_config:
 
 # soft reload uwsgi service
 reload-uwsgi-service:
-  cmd.run:
-    - name: "touch /etc/uwsgi/vassals/{{ pillar['project']['name'] }}.ini"
+  file.touch:
+    - name: "/etc/uwsgi/vassals/{{ pillar['project']['name'] }}.ini"
     - require:
       - file: vassals_directory
       - file: vassal_config

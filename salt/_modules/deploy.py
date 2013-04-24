@@ -53,8 +53,27 @@ def install_mysql_extension():
     cmd = "cd {0}/conf/sql/udf/ && sh install.sh".format(
         __pillar__['project']['root']
     )
+    make_cmd = "cd {0}/conf/sql/udf/ && make".format(
+        __pillar__['project']['root']
+    )
+    __salt__['cmd.run'](make_cmd)
 
-    return __salt__['cmd.run'](cmd)
+    if __pillar__['db']['slave']['port']:
+        port = " -P{0}".format(__pillar__['db']['slave']['port'])
+    else:
+        port = ""
+
+    mysql_cmd = "mysql -u{0} -p{1} -h{2}{3} {4} < {5}".format(
+        __pillar__['db']['slave']['user'],
+        __pillar__['db']['slave']['password'],
+        __pillar__['db']['slave']['host'],
+        port,
+        'mysql',
+        'lib_mysqludf_sys.sql',
+    )
+
+    #return __salt__['cmd.run'](cmd)
+    return __salt__['cmd.run'](mysql_cmd)
 
 
 def create_south_tables():

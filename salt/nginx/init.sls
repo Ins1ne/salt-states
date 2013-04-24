@@ -1,11 +1,19 @@
 # manage nginx config
 nginxconf:
   file.managed:
-    - name: /etc/nginx/sites-enabled/{{ pillar['project']['name'] }}
+    - name: /etc/nginx/sites-available/{{ pillar['project']['name'] }}
     - source: salt://nginx/nginx.conf
     - template: jinja
     - makedirs: True
     - mode: 755
+
+# create symlink of nginx config
+nginxconf_symlink:
+  file.symlink:
+    - name: /etc/nginx/sites-available/{{ pillar['project']['name'] }}
+    - target: /etc/nginx/sites-enabled/{{ pillar['project']['name'] }}
+    - makedirs: True
+    - force: True
 
 # install and run nginx service
 nginx:
