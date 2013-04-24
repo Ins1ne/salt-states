@@ -42,6 +42,7 @@ database_exists:
     - name: {{ pillar['db']['slave']['name'] }}
     - require:
       - pkg: python-mysqldb
+      - service: mysql
 
 # chech if user exists
 {{ pillar['db']['slave']['user'] }}:
@@ -51,6 +52,7 @@ database_exists:
     - password: {{ pillar['db']['slave']['password'] }}
     - require:
       - pkg: python-mysqldb
+      - service: mysql
 
 # grant all priveleges for user to our database
 all_privileges:
