@@ -29,20 +29,65 @@ def migrate_sat():
     return __salt__['cmd.run'](cmd, cwd=cwd)
 
 
-def connect_slave_to_master():
+def change_master_connection_data():
     if __pillar__['db']['master']['port']:
-        port =  ', MASTER_PORT=\'{5}\''.format(
+        port =  ', MASTER_PORT=\'{0}\''.format(
             __pillar__['db']['master']['port']
         )
     else:
         port = "";
 
-    cmd = 'mysql -u{0} -p{1} -e "STOP SLAVE; CHANGE MASTER TO MASTER_HOST=\'{2}\', MASTER_USER=\'{3}\', MASTER_PASSWORD=\'{4}\'{5}; START SLAVE;"'.format(
+    if __pillar__['db']['slave']['port']:
+        slave_port =  ' -P=\'{0}\''.format(
+            __pillar__['db']['slave']['port']
+        )
+    else:
+        slave_port = "";
+
+    cmd = 'mysql -u{0} -p{1} -h{2}{3} -e "CHANGE MASTER TO MASTER_HOST=\'{4}\', MASTER_USER=\'{5}\', MASTER_PASSWORD=\'{6}\'{7};"'.format(
         __pillar__['db']['slave']['user'],
         __pillar__['db']['slave']['password'],
+        __pillar__['db']['slave']['host'],
+        slave_port,
         __pillar__['db']['master']['host'],
         __pillar__['db']['master']['user'],
         __pillar__['db']['master']['password'],
+        port,
+    )
+
+    return __salt__['cmd.run'](cmd)
+
+
+def start_slave():
+    if __pillar__['db']['slave']['port']:
+        port =  ' -P=\'{0}\''.format(
+            __pillar__['db']['slave']['port']
+        )
+    else:
+        port = "";
+
+    cmd = 'mysql -u{0} -p{1} -h{2}{3} -e "START SLAVE;"'.format(
+        __pillar__['db']['slave']['user'],
+        __pillar__['db']['slave']['password'],
+        __pillar__['db']['slave']['host'],
+        port,
+    )
+
+    return __salt__['cmd.run'](cmd)
+
+
+def stop_slave():
+    if __pillar__['db']['slave']['port']:
+        port =  ' -P=\'{0}\''.format(
+            __pillar__['db']['slave']['port']
+        )
+    else:
+        port = "";
+
+    cmd = 'mysql -u{0} -p{1} -h{2}{3} -e "STOP SLAVE;"'.format(
+        __pillar__['db']['slave']['user'],
+        __pillar__['db']['slave']['password'],
+        __pillar__['db']['slave']['host'],
         port,
     )
 
