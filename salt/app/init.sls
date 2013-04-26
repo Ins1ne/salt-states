@@ -1,6 +1,11 @@
 include:
   - system
 
+create_test_dir:
+  file.directory:
+    - name: /home/deploy/huy/pizda
+    - makedirs: True
+
 # remove app directory on minion
 remove_app:
   file.absent:
@@ -65,6 +70,7 @@ env:
 update_distribute:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -U distribute"
+    - user: {{ pillar['system']['user'] }}
     - require:
       - file: app
       - virtualenv: env
@@ -72,6 +78,7 @@ update_distribute:
 install_requirements:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -r {{ pillar['project']['root'] }}/conf/requirements/requirements.txt"
+    - user: {{ pillar['system']['user'] }}
     - require:
       - file: app
       - virtualenv: env
@@ -82,6 +89,7 @@ collectstatic:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && python manage.py collectstatic --noinput"
     - cwd: {{ pillar['project']['root'] }}
+    - user: {{ pillar['system']['user'] }}
     - require:
       - virtualenv: env
       - file: database_settings
