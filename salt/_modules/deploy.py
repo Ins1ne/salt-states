@@ -1,6 +1,6 @@
 # coding: utf-8
 
-import requests
+import urllib2
 
 __outputter__ = {
     "start": "highstate",
@@ -183,11 +183,11 @@ def ping():
     status = False
 
     try:
-        r = requests.get("http://{0}".format(__grains__['fqdn']))
+        r = urllib2.urlopen("http://{0}".format(__grains__['fqdn']))
 
-        if r.status_code == 200:
+        if r.code == 200:
             status = True
-    except requests.exceptions.ConnectionError:
+    except urllib2.URLError:
         pass
 
     return status
