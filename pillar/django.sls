@@ -1,4 +1,4 @@
-virtualenv: /home/vagrant/env
+virtualenv: /home/deploy/env
 
 media_proxy: https://s.gamestand.org/media/
 
@@ -11,18 +11,18 @@ db:
     port: ""
   slave:
     name: satellite_default
-    user: vagrant
-    password: vagrant
+    user: deploy
+    password: deploy
     host: localhost
     port: ""
     root_password: ""
 
 project:
-  root: /home/vagrant/satellite-simplified
+  root: /home/deploy/satellite-simplified
   dir: satellite-simplified
   name: satellites_simplified
 
 system:
-  user: vagrant
-  web_user: vagrant
-  web_group: vagrant
+  user: deploy
+  web_user: www-data
+  web_group: www-data
