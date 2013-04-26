@@ -191,3 +191,9 @@ def ping():
         pass
 
     return status
+
+
+def restart_app():
+    path = "/etc/uwsgi/vassals/{0}.ini".format(__pillar__['project']['name'])
+
+    return __salt__['file.touch'](path)
