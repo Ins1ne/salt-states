@@ -12,7 +12,7 @@ uwsgi:
 # create uwsgi log directory
 uwsgi_log_directory:
   file.directory:
-    - name: /var/log/uwsgi/
+    - name: /var/log/uwsgi
     - makedirs: True
     - group: {{ pillar['system']['web_group'] }}
     - user: {{ pillar['system']['web_user'] }}
@@ -34,7 +34,7 @@ uwsgi_log_directory:
 # create directories for vassals
 vassals_directory:
   file.directory:
-    - name: /etc/uwsgi/vassals/
+    - name: /etc/uwsgi/vassals
     - makedirs: True
 
 # manage app config for uwsgi
