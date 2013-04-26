@@ -6,4 +6,4 @@ base:
     - mysql
     - uwsgi
     - supervisor
-    - graphite
+    #- graphite
