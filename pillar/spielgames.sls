@@ -24,5 +24,5 @@ project:
 
 system:
   user: deploy
-  web_user: deploy
-  web_group: deploy
+  web_user: www-data
+  web_group: www-data
