@@ -14,20 +14,20 @@ uwsgi_log_directory:
   file.directory:
     - name: /var/log/uwsgi
     - makedirs: True
-    - group: {{ pillar['system']['web_group'] }}
-    - user: {{ pillar['system']['web_user'] }}
-    - dir_mode: 755
-    - file_mode: 644
-    - recurse:
-      - group
-      - user
-      - mode
+    #- group: {{ pillar['system']['web_group'] }}
+    #- user: {{ pillar['system']['web_user'] }}
+    #- dir_mode: 755
+    #- file_mode: 644
+    #- recurse:
+      #- group
+      #- user
+      #- mode
 
 # create uwsgi emperor log file
 /var/log/uwsgi/emperor.log:
   file.managed:
-    - user: {{ pillar['system']['web_user'] }}
-    - group: {{ pillar['system']['web_group'] }}
+    #- user: {{ pillar['system']['web_user'] }}
+    #- group: {{ pillar['system']['web_group'] }}
     - require:
       - file: uwsgi_log_directory
 
