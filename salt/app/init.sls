@@ -1,11 +1,6 @@
 include:
   - system
 
-test_copy:
-  file.recurse:
-    - name: /tmp/master
-    - source: salt://home/deploy/master
-
 # remove app directory on minion
 remove_app:
   file.absent:
@@ -30,10 +25,10 @@ app:
       - mode
 
 # remove git repository
-{{ pillar['project']['root'] }}/.git:
-  file.absent:
-    - require:
-      - file: app
+#{{ pillar['project']['root'] }}/.git:
+  #  file.absent:
+    # - require:
+      # - file: app
 
 # configure database_settings
 database_settings:
