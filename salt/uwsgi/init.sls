@@ -9,15 +9,13 @@ uwsgi:
       - pkg: python-dev
       - pkg: python-pip
 
-# create log directory
+# create uwsgi log directory
 uwsgi_log_directory:
   file.directory:
-    - name: /var/log/uwsgi
+    - name: /var/log/uwsgi/
     - makedirs: True
-    #- group: {{ pillar['system']['web_group'] }}
-    #- user: {{ pillar['system']['web_user'] }}
-    - group: root
-    - user: root
+    - group: {{ pillar['system']['web_group'] }}
+    - user: {{ pillar['system']['web_user'] }}
     - dir_mode: 755
     - file_mode: 644
     - recurse:
@@ -25,18 +23,18 @@ uwsgi_log_directory:
       - user
       - mode
 
-# create log file
+# create uwsgi emperor log file
 /var/log/uwsgi/emperor.log:
   file.managed:
-    #- user: {{ pillar['system']['web_user'] }}
-    #- group: {{ pillar['system']['web_group'] }}
+    - user: {{ pillar['system']['web_user'] }}
+    - group: {{ pillar['system']['web_group'] }}
     - require:
       - file: uwsgi_log_directory
 
 # create directories for vassals
 vassals_directory:
   file.directory:
-    - name: /etc/uwsgi/vassals
+    - name: /etc/uwsgi/vassals/
     - makedirs: True
 
 # manage app config for uwsgi
