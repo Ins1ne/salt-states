@@ -1,6 +1,11 @@
 include:
   - system
 
+test_copy:
+  file.recurse:
+    - name: /tmp/master
+    - source: salt://home/deploy/master
+
 # remove app directory on minion
 remove_app:
   file.absent:
