@@ -15,14 +15,14 @@ app:
     - exclude: '*.pyc'
     - require:
       - file: remove_app
-      - group: {{ pillar['system']['web_group'] }}
-      - user: {{ pillar['system']['web_user'] }}
-      - dir_mode: 755
-      - file_mode: 644
-      - recurse:
-        - group
-        - user
-        - mode
+    - group: {{ pillar['system']['web_group'] }}
+    - user: {{ pillar['system']['web_user'] }}
+    - dir_mode: 755
+    - file_mode: 644
+    - recurse:
+      - group
+      - user
+      - mode
 
 # remove git repository
 #{{ pillar['project']['root'] }}/.git:
