@@ -95,9 +95,6 @@ def stop_slave():
 
 
 def install_mysql_extension():
-    cmd = "cd {0}/conf/sql/udf/ && sh install.sh".format(
-        __pillar__['project']['root']
-    )
     make_cmd = "cd {0}/conf/sql/udf/ && make".format(
         __pillar__['project']['root']
     )
@@ -125,7 +122,6 @@ def install_mysql_extension():
         'lib_mysqludf_sys.sql',
     )
 
-    #return __salt__['cmd.run'](cmd)
     return __salt__['cmd.run'](mysql_cmd)
 
 
@@ -166,15 +162,6 @@ def mysql_copy_file(filename):
     return __salt__['cp.get_file']('salt://mysql/sql/{0}'.format(filename),
                                    '/tmp/{0}'.format(filename))
 
-
-#def mysql_copy_structure():
-    #return __salt__['cp.get_file']('salt://mysql/sql/structuredump.sql',
-                                   #'/tmp/stucturedump.sql')
-
-
-#def mysql_copy_data():
-    #return __salt__['cp.get_file']('salt://mysql/sql/datadump.sql',
-                                   #'/tmp/datadump.sql')
 
 def ping():
     """
