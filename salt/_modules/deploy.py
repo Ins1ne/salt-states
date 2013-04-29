@@ -167,14 +167,14 @@ def mysql_copy_file(filename):
                                    '/tmp/{0}'.format(filename))
 
 
-def mysql_copy_structure():
-    return __salt__['cp.get_file']('salt://mysql/sql/structuredump.sql',
-                                   '/tmp/stucturedump.sql')
+#def mysql_copy_structure():
+    #return __salt__['cp.get_file']('salt://mysql/sql/structuredump.sql',
+                                   #'/tmp/stucturedump.sql')
 
 
-def mysql_copy_data():
-    return __salt__['cp.get_file']('salt://mysql/sql/datadump.sql',
-                                   '/tmp/datadump.sql')
+#def mysql_copy_data():
+    #return __salt__['cp.get_file']('salt://mysql/sql/datadump.sql',
+                                   #'/tmp/datadump.sql')
 
 def ping():
     """
