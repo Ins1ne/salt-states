@@ -44,14 +44,6 @@ database_exists:
       - pkg: python-mysqldb
       - service: mysql
 
-# check if database exists
-#database_exists:
-  #cmd.run:
-    #- name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"CREATE DATABASE {{ pillar['db']['slave']['name'] }}\""
-    #- require:
-      #- pkg: python-mysqldb
-      #- service: mysql
-
 # check if user exists
 {{ pillar['db']['slave']['user'] }}:
   mysql_user.present:

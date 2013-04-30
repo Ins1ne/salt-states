@@ -17,6 +17,7 @@ db:
     port: ""
     root_password: vW5Nu0fyfqTeXh
 
+# root connection
 mysql.user: root
 mysql.pass: vW5Nu0fyfqTeXh
 
