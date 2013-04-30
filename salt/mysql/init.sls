@@ -55,14 +55,27 @@ database_exists:
       - service: mysql
 
 # grant all priveleges for user to our database
-all_privileges:
+all_privileges_localhost:
   mysql_grants.present:
     - grant: all privileges
     - database: {{ pillar['db']['slave']['name'] }}.*
     - user: {{ pillar['db']['slave']['user'] }}
+    - host: 'localhost'
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
+
+# grant all priveleges for user to our database
+all_privileges_wildcard:
+  mysql_grants.present:
+    - grant: all privileges
+    - database: {{ pillar['db']['slave']['name'] }}.*
+    - user: {{ pillar['db']['slave']['user'] }}
+    - host: '%'
+    - require:
+      - mysql_database: database_exists
+      - mysql_user: {{ pillar['db']['slave']['user'] }}
+      - mysql_grants: all_privileges_localhost
 
 # grant super priveleges for user to our database
 super_privileges:
