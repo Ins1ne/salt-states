@@ -60,7 +60,7 @@ all_privileges:
     - grant: all privileges
     - database: {{ pillar['db']['slave']['name'] }}.*
     - user: {{ pillar['db']['slave']['user'] }}
-    - host: "'localhost'"
+    - host: "localhost"
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
@@ -71,7 +71,7 @@ all_privileges_wildcard:
     - grant: all privileges
     - database: {{ pillar['db']['slave']['name'] }}.*
     - user: {{ pillar['db']['slave']['user'] }}
-    - host: "'%'"
+    - host: "%"
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
@@ -83,7 +83,7 @@ super_privileges:
     - grant: super
     - database: "*.*"
     - user: {{ pillar['db']['slave']['user'] }}
-    - host: "'localhost'"
+    - host: "localhost"
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
