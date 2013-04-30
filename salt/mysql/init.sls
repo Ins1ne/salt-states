@@ -59,7 +59,6 @@ all_privileges:
     - grant: all privileges
     - database: {{ pillar['db']['slave']['name'] }}.*
     - user: {{ pillar['db']['slave']['user'] }}
-    - host: "localhost"
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
@@ -82,7 +81,6 @@ super_privileges:
     - grant: "SUPER"
     - database: "*.*"
     - user: {{ pillar['db']['slave']['user'] }}
-    - host: "localhost"
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
