@@ -87,14 +87,14 @@ database_exists:
 
 grant_all_privileges:
   cmd.run:
-    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT ALL ON {{ pillar['db']['slave']['name'] }}.* TO {{ pillar['db']['slave']['user'] }}@'localhost' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}'\""
+    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT ALL ON {{ pillar['db']['slave']['name'] }}.* TO {{ pillar['db']['slave']['user'] }}@'localhost' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}';\""
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
 
 grant_all_privileges_wildcard:
   cmd.run:
-    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT ALL ON {{ pillar['db']['slave']['name'] }}.* TO {{ pillar['db']['slave']['user'] }}@'%' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}'\""
+    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT ALL ON {{ pillar['db']['slave']['name'] }}.* TO {{ pillar['db']['slave']['user'] }}@'%' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}';\""
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
@@ -102,7 +102,14 @@ grant_all_privileges_wildcard:
 
 grant_super_privileges:
   cmd.run:
-    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT SUPER ON *.* TO {{ pillar['db']['slave']['user'] }}@'localhost' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}'\""
+    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT SUPER ON *.* TO {{ pillar['db']['slave']['user'] }}@'localhost' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}';\""
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
+
+flush_privileges:
+  cmd.run:
+    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"FLUSH PRIVILEGES;\""
+    - require:
+      - cmd: grant_super_privileges
+      - cmd: grant_all_privileges_wildcard
