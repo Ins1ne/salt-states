@@ -17,6 +17,10 @@ db:
     port: ""
     root_password: vW5Nu0fyfqTeXh
 
+mysql:
+  user: root
+  password: vW5Nu0fyfqTeXh
+
 project:
   root: /home/deploy/satellite-simplified
   dir: satellite-simplified
