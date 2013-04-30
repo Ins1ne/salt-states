@@ -68,7 +68,7 @@ all_privileges:
 # grant all priveleges for user to our database
 all_privileges_wildcard:
   mysql_grants.present:
-    - grant: all privileges
+    - grant: "ALL PRIVILEGES"
     - database: {{ pillar['db']['slave']['name'] }}.*
     - user: {{ pillar['db']['slave']['user'] }}
     - host: "%"
@@ -80,7 +80,7 @@ all_privileges_wildcard:
 # grant super priveleges for user to our database
 super_privileges:
   mysql_grants.present:
-    - grant: super
+    - grant: "SUPER"
     - database: "*.*"
     - user: {{ pillar['db']['slave']['user'] }}
     - host: "localhost"
