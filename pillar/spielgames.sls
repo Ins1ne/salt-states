@@ -1,6 +1,6 @@
 virtualenv: /home/deploy/env
 
-media_proxy: https://s.gamestand.org/media/
+media_proxy: http://s.gamestand.org
 
 db:
   master:
