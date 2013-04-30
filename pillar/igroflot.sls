@@ -18,7 +18,7 @@ db:
     root_password: vW5Nu0fyfqTeXh
 
 mysql.user: root
-mysql.passwd: vW5Nu0fyfqTeXh
+mysql.pass: vW5Nu0fyfqTeXh
 
 project:
   root: /home/deploy/satellite-simplified
