@@ -48,7 +48,6 @@ database_exists:
 {{ pillar['db']['slave']['user'] }}:
   mysql_user.present:
     - host: {{ pillar['db']['slave']['host'] }}
-    - port: {{ pillar['db']['slave']['port'] }}
     - password: {{ pillar['db']['slave']['password'] }}
     - require:
       - pkg: python-mysqldb
