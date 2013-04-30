@@ -125,7 +125,7 @@ def install_mysql_extension():
     return __salt__['cmd.run'](mysql_cmd)
 
 
-def create_south_tables():
+def reset_south():
     cmd = "cd {0} && . {1}/bin/activate && python manage.py reset south --noinput".format(
         __pillar__['project']['root'],
         __pillar__['virtualenv'],
@@ -134,7 +134,7 @@ def create_south_tables():
     return __salt__['cmd.run'](cmd)
 
 
-def mysql_import_file(path):
+def mysql_import_dump(path):
     if __pillar__['db']['slave']['port']:
         port = " -P{0}".format(__pillar__['db']['slave']['port'])
     else:

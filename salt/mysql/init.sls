@@ -54,33 +54,55 @@ database_exists:
       - service: mysql
 
 # grant all priveleges for user to our database
-all_privileges:
-  mysql_grants.present:
-    - grant: all privileges
-    - database: {{ pillar['db']['slave']['name'] }}.*
-    - user: {{ pillar['db']['slave']['user'] }}
+#all_privileges:
+  #mysql_grants.present:
+    #- grant: all privileges
+    #- database: {{ pillar['db']['slave']['name'] }}.*
+    #- user: {{ pillar['db']['slave']['user'] }}
+    #- require:
+      #- mysql_database: database_exists
+      #- mysql_user: {{ pillar['db']['slave']['user'] }}
+
+## grant all priveleges for user to our database
+#all_privileges_wildcard:
+  #mysql_grants.present:
+    #- grant: "ALL PRIVILEGES"
+    #- database: {{ pillar['db']['slave']['name'] }}.*
+    #- user: {{ pillar['db']['slave']['user'] }}
+    #- host: "%"
+    #- require:
+      #- mysql_database: database_exists
+      #- mysql_user: {{ pillar['db']['slave']['user'] }}
+      #- mysql_grants: all_privileges
+
+## grant super priveleges for user to our database
+#super_privileges:
+  #mysql_grants.present:
+    #- grant: "SUPER"
+    #- database: "*.*"
+    #- user: {{ pillar['db']['slave']['user'] }}
+    #- require:
+      #- mysql_database: database_exists
+      #- mysql_user: {{ pillar['db']['slave']['user'] }}
+
+grant_all_privileges:
+  cmd.run:
+    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT ALL ON {{ pillar['db']['slave']['name'] }}.* TO {{ pillar['db']['slave']['user'] }}@'localhost' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}'\""
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
 
-# grant all priveleges for user to our database
-all_privileges_wildcard:
-  mysql_grants.present:
-    - grant: "ALL PRIVILEGES"
-    - database: {{ pillar['db']['slave']['name'] }}.*
-    - user: {{ pillar['db']['slave']['user'] }}
-    - host: "%"
+grant_all_privileges_wildcard:
+  cmd.run:
+    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT ALL ON {{ pillar['db']['slave']['name'] }}.* TO {{ pillar['db']['slave']['user'] }}@'%' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}'\""
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
-      - mysql_grants: all_privileges
+      - cmd: grant_all_privileges
 
-# grant super priveleges for user to our database
-super_privileges:
-  mysql_grants.present:
-    - grant: "SUPER"
-    - database: "*.*"
-    - user: {{ pillar['db']['slave']['user'] }}
+grant_super_privileges:
+  cmd.run:
+    - name: "mysql -uroot {% if pillar['db']['slave']['root_password'] %}-p{{ pillar['db']['slave']['root_password'] }}{% endif %} -e \"GRANT SUPER ON *.* TO {{ pillar['db']['slave']['user'] }}@'localhost' IDENTIFIED BY '{{ pillar['db']['slave']['password'] }}'\""
     - require:
       - mysql_database: database_exists
       - mysql_user: {{ pillar['db']['slave']['user'] }}
