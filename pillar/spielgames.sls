@@ -5,17 +5,17 @@ media_proxy: http://s.gamestand.org
 db:
   master:
     name: origin_db
-    user: repl
-    password: repl
+    user: replica
+    password: kRBo7ql6qFPVWV
     host: 172.30.1.19
     port: ""
   slave:
     name: satellite_default
     user: deploy
-    password: deploy
+    password: IXJ8MvXA4TnNdE
     host: localhost
     port: ""
-    root_password: ""
+    root_password: vW5Nu0fyfqTeXh
 
 project:
   root: /home/deploy/satellite-simplified
