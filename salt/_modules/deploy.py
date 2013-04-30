@@ -134,7 +134,7 @@ def reset_south():
     return __salt__['cmd.run'](cmd)
 
 
-def mysql_import_dump(path):
+def mysql_import_dump(filename):
     if __pillar__['db']['slave']['port']:
         port = " -P{0}".format(__pillar__['db']['slave']['port'])
     else:
@@ -146,7 +146,7 @@ def mysql_import_dump(path):
         __pillar__['db']['slave']['host'],
         port,
         __pillar__['db']['slave']['name'],
-        path,
+        "/tmp/{0}".format(filename),
     )
 
     return __salt__['cmd.run'](cmd)
@@ -158,7 +158,7 @@ def mysql_restart():
     return __salt__['cmd.run'](cmd)
 
 
-def mysql_copy_file(filename):
+def mysql_copy_dump(filename):
     return __salt__['cp.get_file']('salt://mysql/sql/{0}'.format(filename),
                                    '/tmp/{0}'.format(filename))
 
