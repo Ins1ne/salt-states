@@ -7,11 +7,10 @@ __outputter__ = {
 }
 
 
-def start(test=None, **kwargs):
-    return __salt__['state.highstate'](test, **kwargs)
-
-
 def initialize_games():
+    """
+    Initialize basic game publications
+    """
     cmd = ". {0}/bin/activate && python apps/sat/setup.py".format(
         __pillar__['virtualenv']
     )
@@ -21,6 +20,9 @@ def initialize_games():
 
 
 def migrate_sat():
+    """
+    Migrations for satellite
+    """
     cmd = ". {0}/bin/activate && python manage.py migrate sat".format(
         __pillar__['virtualenv']
     )
@@ -30,6 +32,9 @@ def migrate_sat():
 
 
 def change_master_connection_data():
+    """
+    Run CHANGE MASTER TO MATER on slave
+    """
     if __pillar__['db']['master']['port']:
         port =  ', MASTER_PORT=\'{0}\''.format(
             __pillar__['db']['master']['port']
@@ -59,6 +64,9 @@ def change_master_connection_data():
 
 
 def start_slave():
+    """
+    Run START SLAVE in mysql
+    """
     if __pillar__['db']['slave']['port']:
         port =  ' -P=\'{0}\''.format(
             __pillar__['db']['slave']['port']
@@ -77,6 +85,9 @@ def start_slave():
 
 
 def stop_slave():
+    """
+    Run STOP SLAVE in mysql
+    """
     if __pillar__['db']['slave']['port']:
         port =  ' -P=\'{0}\''.format(
             __pillar__['db']['slave']['port']
@@ -95,6 +106,9 @@ def stop_slave():
 
 
 def install_mysql_extension():
+    """
+    Install mysql extension from project
+    """
     make_cmd = "cd {0}/conf/sql/udf/ && make".format(
         __pillar__['project']['root']
     )
@@ -126,6 +140,9 @@ def install_mysql_extension():
 
 
 def reset_south():
+    """
+    Run reset south to create south tables
+    """
     cmd = "cd {0} && . {1}/bin/activate && python manage.py reset south --noinput".format(
         __pillar__['project']['root'],
         __pillar__['virtualenv'],
@@ -135,6 +152,9 @@ def reset_south():
 
 
 def mysql_import_dump(filename):
+    """
+    Import dump by name from /tmp folder on minion
+    """
     if __pillar__['db']['slave']['port']:
         port = " -P{0}".format(__pillar__['db']['slave']['port'])
     else:
@@ -153,12 +173,18 @@ def mysql_import_dump(filename):
 
 
 def mysql_restart():
+    """
+    Restart mysql
+    """
     cmd = 'service mysql restart'
 
     return __salt__['cmd.run'](cmd)
 
 
 def mysql_copy_dump(filename):
+    """
+    Copy dump from salt/mysql/sql on master to /tmp folder on minion
+    """
     return __salt__['cp.get_file']('salt://mysql/sql/{0}'.format(filename),
                                    '/tmp/{0}'.format(filename))
 
@@ -180,7 +206,19 @@ def ping():
     return status
 
 
-def restart_app():
+def reload_app():
+    """
+    Soft reload application
+    """
     path = "/etc/uwsgi/vassals/{0}.ini".format(__pillar__['project']['name'])
 
     return __salt__['file.touch'](path)
+
+
+def restart_app():
+    """
+    Restart application via supervisorctl
+    """
+    cmd = 'supervisorctl restart {0}'.format(__pillar__['project']['name'])
+
+    return __salt__['cmd.run'](cmd)
