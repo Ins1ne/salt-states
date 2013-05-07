@@ -189,6 +189,17 @@ def mysql_copy_dump(filename):
                                    '/tmp/{0}'.format(filename))
 
 
+def setup_initial_mysql_password():
+    """
+    Setup mysql password for silently install
+    """
+    cmd = "echo mysql-server mysql-server/root_password password {0} | debconf-set-selections && echo mysql-server mysql-server/root_password_again password {0} | debconf-set-selections".format(
+    __pillar__['db']['slave']['root_password']
+    )
+
+    return __salt__['cmd.run'](cmd)
+
+
 def ping():
     """
     Check main page status code
