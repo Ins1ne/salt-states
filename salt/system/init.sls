@@ -25,6 +25,7 @@ require-pkgs:
       - redis-server
       - python-mysqldb
       - python-lxml
+      - rubygems
     - require:
       - pkg: mysql-pkgs
       - pkg: lxml-pkgs

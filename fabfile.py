@@ -3,10 +3,8 @@
 
 import os
 import sys
-from fabric.api import cd, run, prefix, env, local
-from fabric.contrib.files import exists
+from fabric.api import local
 from fabric.contrib import django
-from fabric.operations import sudo
 
 SALT_MASTER_PATH = '/home/deploy/master/test/salt/'
 
@@ -20,7 +18,7 @@ from apps.master.models import OriginConf
 
 def origin_list():
     """
-    Список существующих баз origin'ов
+    List available origins databases
     """
     origins = OriginConf.objects.all()
 
@@ -30,7 +28,7 @@ def origin_list():
 
 def satellite(origin_name, minion_name):
     """
-    Деплой нового сателита
+    Deploy new satellite
     """
     origin = OriginConf.objects.filter(human_title=origin_name)
 
@@ -78,3 +76,18 @@ def satellite(origin_name, minion_name):
     local("sudo salt '{0}' deploy.start_slave".format(minion_name))
     local("sudo salt '{0}' deploy.initialize_games".format(minion_name))
     local("sudo salt '{0}' deploy.restart_app".format(minion_name))
+
+
+def update_code(match="'*'"):
+    """
+    Update code base and restart app
+    """
+    project_root = os.path.join(
+        SALT_MASTER_PATH,
+        'app',
+        'satellite-simplified'
+    )
+
+    local('cd {0} && git pull origin master'.format(project_root))
+    local("sudo salt {0} state.highstate".format(match))
+    local("sudo salt {0} deploy.restart_app".format(match))

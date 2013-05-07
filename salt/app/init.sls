@@ -54,6 +54,14 @@ database_settings:
       #- cmd: distribute
       #- file: app
 
+# install sass
+sass:
+  cmd.run:
+    - name: "gem install sass"
+    - require:
+      - pkg: rubygems
+
+# create virtualenv
 env:
   virtualenv.managed:
     - name: {{ pillar['virtualenv'] }}
@@ -62,6 +70,7 @@ env:
     - require:
       - pkg: python-virtualenv
 
+# update distribute
 update_distribute:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -U distribute"
@@ -70,6 +79,7 @@ update_distribute:
       - file: app
       - virtualenv: env
 
+# install main requirements
 install_requirements:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -r {{ pillar['project']['root'] }}/conf/requirements/requirements.txt"

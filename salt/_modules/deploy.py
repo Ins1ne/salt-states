@@ -233,3 +233,16 @@ def restart_app():
     cmd = 'supervisorctl restart {0}'.format(__pillar__['project']['name'])
 
     return __salt__['cmd.run'](cmd)
+
+
+def design(layout):
+    """
+    Renders new layout for project
+    """
+    cmd = ". {0}/bin/activate && python manage.py layout {1}".format(
+        __pillar__['virtualenv'],
+        layout,
+    )
+    cwd = __pillar__['project']['root']
+
+    return __salt__['cmd.run'](cmd, cwd=cwd)
