@@ -6,7 +6,7 @@ import sys
 from fabric.api import local
 from fabric.contrib import django
 
-SALT_MASTER_PATH = '/home/deploy/master/test/salt/'
+SALT_MASTER_PATH = '/home/deploy/salt-states/salt/'
 PROJECT_ROOT = os.path.join(SALT_MASTER_PATH, 'app', 'satellite-simplified')
 
 sys.path[0:0] = [
@@ -60,7 +60,8 @@ def satellite(origin_name, minion_name):
         port,
         origin.name,
         os.path.join(
-            SALT_MASTER_PATH, 'mysql', 'sql', origin.name+'_structuredump.sql'
+            SALT_MASTER_PATH, 'mysql',
+            'sql', origin.name + '_structuredump.sql'
         )
     ))
     local("mysqldump -u{0} -p{1} -h{2}{3} --master-data --no-create-db --no-create-info --complete-insert --ignore-table={4}.south_migrationhistory {4} > {5}".format(
@@ -70,7 +71,7 @@ def satellite(origin_name, minion_name):
         port,
         origin.name,
         os.path.join(
-            SALT_MASTER_PATH, 'mysql', 'sql', origin.name+'_datadump.sql'
+            SALT_MASTER_PATH, 'mysql', 'sql', origin.name + '_datadump.sql'
         )
     ))
     local("sudo salt '{0}' deploy.mysql_copy_dump {1}_structuredump.sql".format(
