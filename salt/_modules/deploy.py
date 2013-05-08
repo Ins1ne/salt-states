@@ -254,4 +254,4 @@ def design(layout):
 
     static = __salt__['cmd.run'](static_cmd, cwd=cwd, runas=user)
 
-    return design + static
+    return "{0}\n\n{1}".format(design, static)
