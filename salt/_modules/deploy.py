@@ -244,5 +244,6 @@ def design(layout):
         layout,
     )
     cwd = __pillar__['project']['root']
+    user = __pillar__['system']['user']
 
-    return __salt__['cmd.run'](cmd, cwd=cwd)
+    return __salt__['cmd.run'](cmd, cwd=cwd, user=user)
