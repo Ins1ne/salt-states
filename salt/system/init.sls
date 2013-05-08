@@ -11,7 +11,7 @@ lxml-pkgs:
     - names:
       - libxml2
       - libxml2-dev
-      - libxslt-dev
+      - libxslt1-dev
 
 # install required system packages
 require-pkgs:
