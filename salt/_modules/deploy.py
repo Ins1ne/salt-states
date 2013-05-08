@@ -246,4 +246,12 @@ def design(layout):
     cwd = __pillar__['project']['root']
     user = __pillar__['system']['user']
 
-    return __salt__['cmd.run'](cmd, cwd=cwd, user=user)
+    design = __salt__['cmd.run'](cmd, cwd=cwd, runas=user)
+
+    static_cmd = ". {0}/bin/activate && python manage.py collectstatic --noinput".format(
+        __pillar__['virtualenv'],
+    )
+
+    static = __salt__['cmd.run'](static_cmd, cwd=cwd, runas=user)
+
+    return design + static

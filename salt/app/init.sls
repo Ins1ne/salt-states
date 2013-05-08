@@ -70,7 +70,7 @@ env:
     - require:
       - pkg: python-virtualenv
 
-# update distribute
+# update distribute - need for install requirements
 update_distribute:
   cmd.run:
     - name: ". {{ pillar['virtualenv'] }}/bin/activate && pip install -U distribute"
