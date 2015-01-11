@@ -44,7 +44,7 @@ def satellite(origin_name, minion_name):
     local("sudo salt '{0}' deploy.setup_initial_mysql_password".format(
         minion_name
     ))
-    local("cd {0} && git pull origin master".format())
+    local("cd {0} && git pull origin master".format(PROJECT_ROOT))
     local("sudo salt '{0}' state.highstate".format(minion_name))
     local("sudo salt '{0}' deploy.install_mysql_extension".format(minion_name))
 
